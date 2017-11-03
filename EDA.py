@@ -58,6 +58,29 @@ plt.show()
 
 
 #########################################################################
-# Word cloud 
+# Word cloud of most frequent words
+
+
+words_df = df.ix[:,'got':'wan']
+
+all_words = []
+
+for i in range(words_df.shape[0]):
+	for j in range(words_df.shape[1]):
+		if words_df.iloc[i,j]>0:
+			all_words += [words_df.columns[j]]*words_df.iloc[i,j]
+
+text = ' '.join(all_words)
+
+
+
+
+
+wordcloud = WordCloud(max_font_size=80).generate(text)
+
+
+plt.imshow(wordcloud, interpolation="bilinear")
+plt.axis("off")
+plt.show()
 
 
