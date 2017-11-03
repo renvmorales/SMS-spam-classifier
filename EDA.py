@@ -47,12 +47,13 @@ sns.set_style('ticks')
 min_value = 150
 
 # create barplot using seaborn
-gr = sns.barplot(x=common_words[common_words>min_value].index, 
+gr = sns.barplot(x=common_words.index[common_words>min_value], 
 	y=common_words[common_words>min_value].values, palette='deep')
 
 # rotate horizontal ticks (words)
 gr.set_xticklabels(gr.get_xticklabels(), rotation=90)
 
+plt.ylabel('Counts')
 # show bar plot 
 plt.show()
 
@@ -61,26 +62,27 @@ plt.show()
 # Word cloud of most frequent words
 
 
-words_df = df.ix[:,'got':'wan']
+text = []
 
-all_words = []
+# group all words as many times in one list
+for i in range(common_words.shape[0]):
+	text += [common_words.index[i]]*common_words[i]
 
-for i in range(words_df.shape[0]):
-	for j in range(words_df.shape[1]):
-		if words_df.iloc[i,j]>0:
-			all_words += [words_df.columns[j]]*words_df.iloc[i,j]
-
-text = ' '.join(all_words)
+# create a long string with all common words
+text = ' '.join(text)
 
 
+# create a custom word cloud
+wordcloud = WordCloud(max_words=100, width=800, height=400, collocations=False, 
+	background_color='white').generate(text)
 
 
-
-wordcloud = WordCloud(max_font_size=80).generate(text)
-
-
+# display word cloud
 plt.imshow(wordcloud, interpolation="bilinear")
 plt.axis("off")
 plt.show()
+
+
+#########################################################################
 
 
