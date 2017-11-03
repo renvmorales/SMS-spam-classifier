@@ -107,5 +107,23 @@ plt.show()
 
 
 #########################################################################
+# Max, min, mean, median, std, variance of monthly 'Word_Count'
 
 
+# group dataframe by month
+monthly_word = df.groupby(pd.TimeGrouper('M'))
+
+
+# aggregate 'Word_Count' values for general statistics
+monthly_word = monthly_word['Word_Count'].agg(['min', 'max', 
+	'mean', 'std'])
+
+
+# change the indexes for better description
+monthly_word.index = ['2017-Jan', '2017-Feb', '2017-Mar']
+
+
+print(monthly_word)
+
+
+#########################################################################
