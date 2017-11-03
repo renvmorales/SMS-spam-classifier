@@ -73,13 +73,36 @@ text = ' '.join(text)
 
 
 # create a custom word cloud
-wordcloud = WordCloud(max_words=100, width=800, height=400, collocations=False, 
+wordcloud = WordCloud(max_words=100, width=800, height=400, 
+	collocations=False, 
 	background_color='white').generate(text)
 
 
 # display word cloud
 plt.imshow(wordcloud, interpolation="bilinear")
 plt.axis("off")
+plt.show()
+
+
+#########################################################################
+# count plot of normal and spam messages per month
+
+
+# change indexes to datetimes values
+df.index = pd.to_datetime(df['Date'],format='%Y-%m-%d %H:%M:%S')
+
+
+# group by month and 'IsSpam' variable 
+monthly = df.groupby([pd.TimeGrouper('M'), 'IsSpam']).count()
+
+
+# bar plot using 
+ax = monthly['Word_Count'].unstack(level=0).plot(kind='bar')
+# sns.barplot(data=monthly, x=monthly.index)
+
+
+# add a better description for the legend labels
+ax.legend(['2017-Jan', '2017-Feb', '2017-Mar'])
 plt.show()
 
 
