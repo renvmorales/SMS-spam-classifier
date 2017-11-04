@@ -81,6 +81,8 @@ wordcloud = WordCloud(max_words=100, width=800, height=400,
 	background_color='white').generate(text)
 
 
+print('\nCreating a word cloud of all common words ...')
+
 # display word cloud
 plt.imshow(wordcloud, interpolation="bilinear")
 plt.axis("off")
