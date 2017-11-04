@@ -46,6 +46,9 @@ sns.set_style('ticks')
 # minimum word count to display at the bar plot
 min_value = 150
 
+
+print('\nCreating a bar plot with most common words counts ....')
+
 # create barplot using seaborn
 gr = sns.barplot(x=common_words.index[common_words>min_value], 
 	y=common_words[common_words>min_value].values, palette='deep')
