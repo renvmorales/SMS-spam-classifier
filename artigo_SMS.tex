@@ -80,19 +80,21 @@ da base de dados são descritos a seguir:
  \item 1 coluna que identifica se a mensagem é spam ou não (\texttt{IsSpam}).
 \end{itemize}
 
+Sempre que possível, a base de dados neste trabalho será referida de \texttt{SMS}.
+
 
 \subsection{Análise exploratória}
 
 Inicialmente foi realizado uma análise das palavras mais frequentes em toda a base. Para isto, 
 as frequências totais de cada uma das 149 palavras mais comuns foram calculadas. O seguinte gráfico 
 de barras na figura \ref{fig:barplot} exibe cada uma das frequência para palavras com frequência de 
-no mínimo igual a 150,
+no mínimo igual a 150.
 
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=\textwidth]{word_barplot.png}
-    \caption[Figura simples]{Gráfico de barras com frequências de palavras mais comuns superiores 
-    a 150.}
+    \caption[Figura simples]{Gráfico de barras com frequências de palavras mais comuns de 
+    \texttt{SMS} superiores a 150.}
     \label{fig:barplot}
 \end{figure}
 
@@ -101,16 +103,18 @@ visualização). A lista completa destas palavras é: \texttt{got, free, text, t
 like, now, send, still, call, home, want, will, going, lor, can, just, love, ill, know, see, need, 
 ltgt, get, time, sorry, good, come, day, stop, one}.
 
-Um outro recurso de mais fácil visualização é a nuvem de palavras. Neste caso uma nuvem de palavras
-foi aplicado sobre o universo de palavras mais comuns. A figura \ref{fig:wordcloud} apresenta a 
-nuvem de palavras resultante.
+Um outro recurso de mais fácil visualização é a nuvem de palavras. Nela, o tamanho de cada palavra 
+é proporcional a sua frequência de ocorrência. Neste caso uma nuvem de palavras foi aplicada sobre 
+o universo de palavras mais comuns. A figura \ref{fig:wordcloud} apresenta a nuvem com as 50 palavras 
+de maior ocorrência. Através do recurso de nuvem fica muito mais fácil identificar, por exemplo,
+que as palavras mais utilizadas foram: \texttt{call, can, now, will, get, just}.
 
 
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=\textwidth]{word_cloud.png}
-    \caption[Figura simples]{Gráfico de barras com frequências de palavras mais comuns superiores 
-    a 150.}
+    \caption[Figura simples]{Nuvem com as 50 palavras mais frequentes dentro de um universo de 
+    palvras mais comuns de \texttt{SMS}.}
     \label{fig:wordcloud}
 \end{figure}
 
