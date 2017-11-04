@@ -48,6 +48,8 @@ min_value = 150
 
 
 print('\nCreating a bar plot with most common words counts ....')
+print('These are the %d words shown:' % len(common_words.index[common_words>min_value]))
+print(list(common_words.index[common_words>min_value]))
 
 # create barplot using seaborn
 gr = sns.barplot(x=common_words.index[common_words>min_value], 
@@ -76,8 +78,8 @@ text = ' '.join(text)
 
 
 # create a custom word cloud
-wordcloud = WordCloud(max_words=100, width=800, height=400, 
-	collocations=False, 
+wordcloud = WordCloud(max_words=50, width=800, height=400, 
+	collocations=False, stopwords=[],
 	background_color='white').generate(text)
 
 
