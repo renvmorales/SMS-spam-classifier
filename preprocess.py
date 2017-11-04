@@ -3,6 +3,7 @@
 import pandas as pd 
 import numpy as np
 import string
+from nltk.corpus import stopwords
 
 
 
@@ -28,6 +29,12 @@ for msg in messages:
 
 
 
+# common words in english (to remove)
+remove = stopwords.words('english')
+
+
 # remove all common words (stopwords)
-
-
+nostopwords_msg = []
+for msg in nopunc_msg:
+	nostopwords = [word for word in msg.split() if word.lower() not in remove]
+	nostopwords_msg.append(' '.join(nostopwords))
