@@ -123,6 +123,7 @@ monthly_word = monthly_word['Word_Count'].agg(['min', 'max',
 monthly_word.index = ['2017-Jan', '2017-Feb', '2017-Mar']
 
 
+print('\nSome general statistics for monthly word counts:')
 print(monthly_word)
 
 
