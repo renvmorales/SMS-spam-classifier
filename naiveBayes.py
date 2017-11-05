@@ -10,7 +10,6 @@ from preprocess import text_process
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.model_selection import cross_val_score
 from sklearn.pipeline import Pipeline
-from sklearn.cross_validation import train_test_split
 from sklearn.utils import shuffle
 
 
@@ -23,8 +22,7 @@ print('\nReading csv file ....')
 
 X, Y = shuffle(df['Full_Text'], df['IsSpam'])
 
-msg_train, msg_test, label_train, label_test = train_test_split(X, Y,
-	test_size=0.3)
+
 
 
 
@@ -44,10 +42,29 @@ def binary_class(x):
 		return 0
 
 
+kfold=10
+
+print('\nApplying %d-fold cross-validation ...' % kfold)
+print('\n')
+
 
 scores = cross_val_score(pipeline, X, Y.apply(binary_class), 
-	cv=10, scoring='f1')
-print('F1-score: %.3f (+/- %.3f )' % (scores.mean(), 2*scores.std()))
+	cv=kfold, scoring='f1')
+
+print('F1-score: %.3f (+/- %.3f)' % (scores.mean(), 2*scores.std()))
 
 
 
+precisions = cross_val_score(pipeline, X, Y.apply(binary_class), 
+	cv=kfold, scoring='precision')
+
+print('Precision: %.3f (+/- %.3f)' % (precisions.mean(), 
+	2*precisions.std()))
+
+
+
+recalls = cross_val_score(pipeline, X, Y.apply(binary_class), 
+	cv=kfold, scoring='recall')
+
+print('Recall: %.3f (+/- %.3f)' % (recalls.mean(), 
+	2*recalls.std()))
