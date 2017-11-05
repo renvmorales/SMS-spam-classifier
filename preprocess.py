@@ -1,40 +1,27 @@
 #!/usr/bin/python3
 
-import pandas as pd 
-import numpy as np
 import string
 from nltk.corpus import stopwords
 
 
 
-# read SMS.csv file 
-df = pd.read_csv('SMS.csv', encoding = "ISO-8859-1")
-print('\nReading csv file ....')
+# define a function that can be used for text processing in a pipeline
+def text_process(msg):
 
+# a string with all punctuation characters	
+	punc = string.punctuation
 
-
-# group all messages in one list
-messages = list(df['Full_Text'])
-
-
-# a string with all punctuation characters
-punc = string.punctuation
-
-
-# remove all punctuation from all messages
-nopunc_msg = []
-for msg in messages:
+# remove all punctuation from the string message
 	nopunc = [char for char in msg if char not in punc]
-	nopunc_msg.append(''.join(nopunc))
 
-
+# join all characters into a single string
+	nopunc = ''.join(nopunc)
 
 # common words in english (to remove)
-remove = stopwords.words('english')
+	remove = stopwords.words('english')
+
+# return a list with all relevant words 
+	return [word for word in nopunc.split() if word.lower() not in remove]
 
 
-# remove all common words (stopwords)
-nostopwords_msg = []
-for msg in nopunc_msg:
-	nostopwords = [word for word in msg.split() if word.lower() not in remove]
-	nostopwords_msg.append(' '.join(nostopwords))
+
