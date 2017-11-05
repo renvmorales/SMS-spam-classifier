@@ -11,6 +11,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import cross_val_score
 from sklearn.pipeline import Pipeline
 from sklearn.utils import shuffle
+import time
 
 
 
@@ -56,27 +57,30 @@ print('\n')
 
 
 
+start = time.time()
 # estimate f1-score using kfold cross validation 
 f1_scores = cross_val_score(pipeline, X, Y, 
 	cv=kfold, scoring='f1')
 
-print('F1-score: %.3f (+/- %.3f)' % (f1_scores.mean(), 
-	2*f1_scores.std()))
+print('F1-score: %.3f (+/- %.3f)    time: %.3f sec' % (f1_scores.mean(), 
+	2*f1_scores.std(), (time.time()-start)))
 
 
 
+start = time.time()
 # estimate precision using kfold cross validation 
 precisions = cross_val_score(pipeline, X, Y, 
 	cv=kfold, scoring='precision')
 
-print('Precision: %.3f (+/- %.3f)' % (precisions.mean(), 
-	2*precisions.std()))
+print('Precision: %.3f (+/- %.3f)    time: %.3f sec' % (precisions.mean(), 
+	2*precisions.std(), (time.time()-start)))
 
 
 
+start = time.time()
 # estimate recall using kfold cross validation 
 recalls = cross_val_score(pipeline, X, Y, 
 	cv=kfold, scoring='recall')
 
-print('Recall: %.3f (+/- %.3f)' % (recalls.mean(), 
-	2*recalls.std()))
+print('Recall: %.3f (+/- %.3f)    time: %.3f sec' % (recalls.mean(), 
+	2*recalls.std(), (time.time()-start)))
