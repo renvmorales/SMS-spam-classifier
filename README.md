@@ -37,4 +37,4 @@ A word cloud, and a monthly counts bar plot whether messages is spam or not will
 	python3 MLP.py  # evaluate a MLP neural network
 ```
 
-A output will print out the error and estimates for f1-score, precision and recall metrics.
+The output will print out the error and estimates for f1-score, precision and recall metrics.
