@@ -48,7 +48,8 @@ rapidamente, através de validação cruzada com $k$-pastas, a capacidade de cla
 quatro modelos de aprendizado: \textit{naïve-Bayes}, regressão logística, SVM (\textit{support 
 vector machine}) e \textit{Multi-layer Perceptron}. As análises, validação de performance dos 
 modelos são todos realizados usando a linguagem de código aberto Python, mais especificamente os 
-módulos: \textit{numpy, pandas, scikit-learn, wordcloud, nltk, string}.
+módulos: \textit{numpy, pandas, scikit-learn, wordcloud, nltk, string}. Os códigos e dados podem 
+ser conferidos no repositório do GitHub\footnote{\url{https://github.com/renvmorales/SMS-spam-classifier}}.
 
 
 % Text mining is commonly used to provide some general description into unustructured data 
@@ -163,6 +164,29 @@ que a mediana indica a existência de algumas mensagens muito longas (com muitas
 está de acordo pois o valor máximo encontrado para esta variável é sempre superior a 100 palavras,
 o que acaba deslocando o valor da média nesta direção.
 
+\newpage
+Foi verificado que em relação a frequência de spams, os dias com menor incidência (maior envio de 
+mensagens comuns) se localizam dentro da primeira quinzena de cada mês. A tabela \ref{tab:nonspam} 
+apresenta os dias de cada mês com o maior número de mensagens comuns.
+
+\vspace{.5cm}
+% \newpage
+% \makesavenoteenv{tabular}
+\begin{center}
+\captionof{table}{Dias de cada mês com maior número de mensagens do tipo não-spam.}
+\begin{tabular}{cc}
+ \hline
+	       &  \textbf{Número de msgs.} \\
+  2017-Jan-01  &  69 \\
+  2017-Fev-13  &  72 \\
+  2017-Mar-08  &  69 \\
+ \hline
+%  \hline
+ \label{tab:nonspam}
+\end{tabular}
+\end{center}
+
+
 
 
 % \newpage
@@ -185,10 +209,10 @@ para cada uma das 5.574 mensagens disponíveis resultando em palavras sem hifeni
 pontuações.
 
 
-\subsection{Codificação das palavras}
+\subsection{Codificação das mensagens}
 
 Palavras individuais resultantes do pré-processamento devem ser ``vetorizadas'' para alimentarem 
-um modelo de classificação. Este processo consiste de 3 etapas:
+um modelo de classificação. Este processo consiste de 3 etapas (ver \citet{text}):
 \begin{enumerate}
  \item Associar a cada palavra sua frequência de ocorrência para cada mensagem (frequência
  de termos);
@@ -205,8 +229,8 @@ um modelo de classificação. Este processo consiste de 3 etapas:
 Devido a desbalanço entre as classes ``spam'' e mensagens comuns, métricas simples como acurácia 
 podem apresentar resultados viesados. Desta forma, o \textit{f1-score} é utlizada como 
 principal métrica para referência de desempenho de classificação do modelo assumindo valores de 
-0 (pior desempenho) até 1 (melhor desempenho). O f1-score é calculado como uma média ponderada 
-entre as métricas de precisão e revocação segundo a expressão:
+0 (pior desempenho) até 1 (melhor desempenho). O f1-score (ver \citet{f1score}) é calculado como a 
+média harmônica entre as métricas de precisão e revocação segundo a expressão:
 \begin{equation}
  f1 = 2 \times \left[ \frac{\mbox{precisão} \times \mbox{revocação}}{\mbox{precisão} + \mbox{revocação}} \right]
 \end{equation}
@@ -224,9 +248,8 @@ As métricas de precisão e revocação são definidas respectivamente pelas equ
 \end{equation}
 onde $V_p$ é o número de verdadeiros positivos, $F_p$ é o número de falsos positivos, e $F_n$ 
 representa o número de falsos negativos.
-
-Este conjunto de métricas é calculado durante o processo de validação cruzada em pastas descrito 
-a seguir.
+Este conjunto de três métricas é calculado durante o processo de validação cruzada em pastas 
+descrito a seguir.
 
 
 \subsection{Validação cruzada com $k$-pastas}
@@ -247,7 +270,7 @@ e $\sigma_M$ representa o desvio padrão amostral e serve para estimar o interva
 (neste caso relativo a 95\% de probabilidade) de conter a medida real.
 
 Neste trabalho adota-se um valor $k=10$ pastas por ser este um número considerado na literatura 
-capaz de produzir estimativas confiáveis da capacidade de classificação(\ref{}).
+capaz de produzir estimativas confiáveis da capacidade de classificação (ver \citet{crossval}).
 
 
 
@@ -328,6 +351,17 @@ podem não ser úteis uma vez que foi demonstrado que o tempo médio de treiname
 o maior grau possível de informação relevante (engenharia de atributos), pois isto pode resultar
 em métricas de desempenho mais positivas mesmo para métodos mais rápidos porém com baixo poder de 
 discriminação.
+
+
+
+\bibliographystyle{plainnat}
+% 
+% % Arquivo .bib
+\bibliography{refs.bib}
+ 
+
+% \section{Referências}
+
 
 
 
