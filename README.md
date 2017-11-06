@@ -8,5 +8,13 @@ Here a small dataset of 5547 SMS messages (4827 regular and 747 spam) is briefly
 The goal here is to evaluate the generalization capacity of the following classification algorithms: Naïve Bayes, logistic regression, support vector machine (SVM), and multi-layer perceptron (MLP) neural networks. A 10-fold cross-validation approach is implemented using Python3 programming language, using the following modules: numpy, pandas, scikit-learn, wordcloud, nltk, string
 
 
+## Directions
+
+Run the exploratory data analysis:
+```python
+
+	python3 EDA.py
+```
+
 
 
