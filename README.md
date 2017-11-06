@@ -27,6 +27,11 @@ A word cloud, and a monthly counts bar plot whether messages is spam or not will
 
 2- Run a 10-fold cross-validation using one of the following scripts: 
 ```bash
-        python3 naiveBayes.py  # perform a naïve Bayes
-	python3 logisticReg.py  # perform a logistic regression
+        python3 naiveBayes.py  # evaluate a naïve Bayes
+	
+	python3 logisticReg.py  # evaluate a logistic regression
+	
+	python3 svm.py  # evaluate a SVM
+	
+	python3 MLP.py  # evaluate a MLP neural network
 ```
