@@ -25,7 +25,7 @@ So you can get some plots like this bar plot with words with counts superior to 
 A word cloud, and a monthly counts bar plot whether messages is spam or not will be also provided with some other descritive statistics at the terminal output.
 
 
-2- Run a 10-fold cross-validation using one of the following scripts: 
+2- Run a 10-fold cross-validation using one of the following commands: 
 ```bash
         python3 naiveBayes.py  # evaluate a naïve Bayes
 	
@@ -35,3 +35,5 @@ A word cloud, and a monthly counts bar plot whether messages is spam or not will
 	
 	python3 MLP.py  # evaluate a MLP neural network
 ```
+
+A output will print out the error and estimates for f1-score, precision and recall metrics.
