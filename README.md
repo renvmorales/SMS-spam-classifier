@@ -11,7 +11,7 @@ The goal here is to evaluate the generalization capacity of the following classi
 
 ## Directions
 
-1- Run the exploratory data analysis script:
+1. Run the exploratory data analysis script:
 ```bash
 	python3 EDA.py
 ```
@@ -26,7 +26,7 @@ So you can get some plots like this bar plot with words with counts superior to 
 A word cloud, and a monthly counts bar plot whether messages is spam or not will be also provided with some other descritive statistics at the terminal output.
 
 
-2- Run a 10-fold cross-validation using one of the following commands: 
+2. Run a 10-fold cross-validation using one of the following commands: 
 ```bash
         python3 naiveBayes.py  # evaluate a naïve Bayes
 	
