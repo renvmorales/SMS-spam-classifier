@@ -15,5 +15,12 @@ Run the exploratory data analysis:
 	python3 EDA.py
 ```
 
+So you can get some of the plots like this one:
+
+<p align="center">
+  <img src="word_barplot.png">
+</p>
+
+
 
 
