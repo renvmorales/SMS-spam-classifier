@@ -34,7 +34,7 @@
 
 \section{Introdução}
 
-Mineração de texto (processamento de linguagem natural PLN?) é comumente usada com a finalidade de analisar e obter uma descrição geral em 
+Mineração de texto é comumente usada com a finalidade de analisar e obter uma descrição geral em 
 dados não-estruturados (por exemplo, um texto único, ou mensagens enviadas a partir de vários 
 usuários). Este tipo de operação não é apenas importante para fins de uma análise exploratória, 
 mas também necessário durante a etapa de pré-processamento que fornecerá dados de entrada para 
@@ -42,12 +42,13 @@ treinar um modelo (algoritmo) de classificação através de uma técnica de apr
 
 Neste trabalho, uma pequena base de dados de 5.574 mensagens SMS contendo spams (mensagens 
 consideradas fora do interesse do destinatário) é analisada brevemente e convertida numericamente 
-usando a técnica de tf-idf (?). Uma vez concluído o processamento, a base de dados é dividida 
-em duas partes: uma para ``teste'' e outra para ``treinamento''. O objetivo aqui é de avaliar 
-rapidamente a capacidade de classificação para quatro modelos de aprendizado: \textit{naïve-Bayes},
-regressão logística, SVM e \textit{Multi-layer Perceptron}. As análises, teste e validação de 
-performance dos modelos são todos realizados usando a linguagem de código aberto Python, 
-especificamente os módulos: \textit{numpy, pandas, scikit-learn, wordcloud, nltk, string}.
+usando a técnica de \textit{tf-idf}. Uma vez concluído o processamento, a base de dados é dividida 
+em duas partes: uma para ``teste'' e outra para ``treinamento''. O objetivo aqui é avaliar 
+rapidamente, através de validação cruzada com $k$-pastas, a capacidade de classificação para 
+quatro modelos de aprendizado: \textit{naïve-Bayes}, regressão logística, SVM (\textit{support 
+vector machine}) e \textit{Multi-layer Perceptron}. As análises, validação de performance dos 
+modelos são todos realizados usando a linguagem de código aberto Python, mais especificamente os 
+módulos: \textit{numpy, pandas, scikit-learn, wordcloud, nltk, string}.
 
 
 % Text mining is commonly used to provide some general description into unustructured data 
@@ -58,13 +59,9 @@ especificamente os módulos: \textit{numpy, pandas, scikit-learn, wordcloud, nlt
 
 
 
-\section{Metodologia}
 
 
-
-\section{Resultados}
-
-\subsection{Descrição da base de dados}
+\section{Descrição da base de dados}
 
 A base de dados contida no arquivo \texttt{SMS.csv} é composta por diversas mensagens comuns (4.827)
 e spams (747) em inglês dispostos na forma de 5.574 linhas e 154 colunas. Os atributos (cada coluna) 
@@ -82,6 +79,7 @@ da base de dados são descritos a seguir:
 \end{itemize}
 
 Sempre que possível, a base de dados neste trabalho será referida como \texttt{SMS}.
+
 
 
 \subsection{Análise exploratória}
@@ -167,11 +165,100 @@ o que acaba deslocando o valor da média nesta direção.
 
 
 
-\newpage
+% \newpage
 
-\vspace{1cm}
 
-\subsection{Validação cruzada usando ``k-pastas''}
+
+
+
+\section{Metodologia}
+
+
+\subsection{Pré-processamento de texto}
+
+Afim de fornecer apenas informações relevantes a um algoritmo de classificação, todos os 
+caracteres de pontuação das mensagens de \texttt{SMS} são removidos. Em seguida, são 
+removidas palavras extremamente comuns da língua inglesa (no total um conjunto de 153 pronomes, 
+artigos e preposições) uma vez que, presentes em diferentes tipos de mensagens, não fornecem 
+informação útil para discriminar entre spams e mensagens normais. Este procedimento é realizado 
+para cada uma das 5.574 mensagens disponíveis resultando em palavras sem hifenizações ou 
+pontuações.
+
+
+\subsection{Codificação das palavras}
+
+Palavras individuais resultantes do pré-processamento devem ser ``vetorizadas'' para alimentarem 
+um modelo de classificação. Este processo consiste de 3 etapas:
+\begin{enumerate}
+ \item Associar a cada palavra sua frequência de ocorrência para cada mensagem (frequência
+ de termos);
+ \item Pesar cada palavra com o inverso da frequência de termos para que cada palavras mais 
+ frequentes tenham um peso menor usando \textit{tf-idf};
+ \item Normalizar usando norma-L2 cada vetor de forma que comprimento do texto não influencie 
+ durante a classificação.
+\end{enumerate}
+
+
+
+\subsection{Métricas de desempenho}
+
+Devido a desbalanço entre as classes ``spam'' e mensagens comuns, métricas simples como acurácia 
+podem apresentar resultados viesados. Desta forma, o \textit{f1-score} é utlizada como 
+principal métrica para referência de desempenho de classificação do modelo assumindo valores de 
+0 (pior desempenho) até 1 (melhor desempenho). O f1-score é calculado como uma média ponderada 
+entre as métricas de precisão e revocação segundo a expressão:
+\begin{equation}
+ f1 = 2 \times \left[ \frac{\mbox{precisão} \times \mbox{revocação}}{\mbox{precisão} + \mbox{revocação}} \right]
+\end{equation}
+
+As métricas de precisão e revocação são definidas respectivamente pelas equações 
+(\ref{eq:precision}) e (\ref{eq:recall}),
+\begin{equation}
+ \mbox{precisão} = \frac{V_p}{V_p+F_p}
+\label{eq:precision} 
+\end{equation}
+
+\begin{equation}
+ \mbox{revocação} = \frac{V_p}{V_p+F_n}
+\label{eq:recall} 
+\end{equation}
+onde $V_p$ é o número de verdadeiros positivos, $F_p$ é o número de falsos positivos, e $F_n$ 
+representa o número de falsos negativos.
+
+Este conjunto de métricas é calculado durante o processo de validação cruzada em pastas descrito 
+a seguir.
+
+
+\subsection{Validação cruzada com $k$-pastas}
+
+Este processo de validação consiste em separar o conjunto total de dados em $k$ partes (`pastas'). 
+Em cada uma das $k$ iterações, uma pasta ``teste'' diferente será usada para avaliar o desempenho 
+do modelo através de métricas enquanto que as demais pastas servirão para constituir a base de 
+treinamento. Desta maneira, constrói-se uma estimativa de ``capacidade generalizada'' de 
+classificação para um dado modelo usando o valor médio das métricas encontradas. O valor da 
+estimativa da métrica $M$ é representado pela expressão (\ref{eq:estimate})
+\begin{equation}
+ \widehat{M} = \overline{M} \pm 2 .\sigma_M
+ \label{eq:estimate}
+\end{equation}
+onde $\overline{M}$ é a média aritmética de todas as observações de $M_1,~M_2,~ \dots~,M_k$, 
+$$ \overline{M} = \frac{1}{k}\sum_{i=1}^k M_i$$
+e $\sigma_M$ representa o desvio padrão amostral e serve para estimar o intervalo de confiança 
+(neste caso relativo a 95\% de probabilidade) de conter a medida real.
+
+Neste trabalho adota-se um valor $k=10$ pastas por ser este um número considerado na literatura 
+capaz de produzir estimativas confiáveis da capacidade de classificação(\ref{}).
+
+
+
+
+
+
+\section{Resultados}
+
+
+% \vspace{1cm}
+% \subsection{Validação cruzada usando 10 pastas}
 A tabela \ref{tab:metrics} apresenta os valores médios e erro associado das métricas de avaliação 
 de desempenho f1-score, \textit{precision} (precisão) e \textit{recall} (revocação) encontrados 
 aplicando validação cruzada com 10 pastas. A tabela \ref{tab:tempo} indica os tempos registrados 
@@ -180,8 +267,8 @@ ocorrem para modelos mais complexos (SVM e MLP) com valores do f1-score compará
 margem de erro. A complexidade de cada modelo está normalmente associado ao custo computacional 
 que reflete no tempo de cada processo. No entanto, não necessariamente o modelo mais complexo irá 
 apresentar desempenho superior. Isto é visível para o tempo de resposta do modelo de SVM 
-da validação cruzada é muito menor (próximo a 16 segundos) quando comparado ao modelo MLP 
-(acima de 1 minuto).
+da validação cruzada é muito menor (próximo a 16 segundos) quando comparado ao modelo de redes 
+neurais MLP (acima de 1 minuto).
 
 
 \vspace{.5cm}
@@ -228,6 +315,19 @@ da validação cruzada é muito menor (próximo a 16 segundos) quando comparado 
 
 
 \section{Conclusão}
+
+Quatro modelos de aprendizado supervisionado tiveram seus desempenhos avaliados para classificação
+de mensagens SMS em duas categorias: spam ou mensagem comum. Apesar de ter sido realizado um 
+procedimento básico para vetorizar cada mensagem, constatou-se que alguns algoritmos podem ter 
+desempenho bastante aceitável (em especial SVM e redes neurais do tipo MLP) com valores de 
+precisão e revocação superiores a 0,9. Neste caso, o critério de escolha do método de classificação 
+deve ser direcionado em função do tempo de resposta esperado para o tipo de aplicação desejado. 
+No caso de sistemas que operam em tempo real, modelos de alta complexidade, como o caso de MLP,
+podem não ser úteis uma vez que foi demonstrado que o tempo médio de treinamento ficou acima de 
+7 segundos. Uma recomendação (de forma geral) é de preparar os conjunto de dados tentando capturar 
+o maior grau possível de informação relevante (engenharia de atributos), pois isto pode resultar
+em métricas de desempenho mais positivas mesmo para métodos mais rápidos porém com baixo poder de 
+discriminação.
 
 
 
