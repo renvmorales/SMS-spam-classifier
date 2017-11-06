@@ -135,3 +135,21 @@ print(monthly_word)
 
 
 #########################################################################
+# days with largest non spam messages
+
+
+# group dataframe by day
+daily_word = df.groupby([pd.TimeGrouper('D'), 'IsSpam']).count()
+
+
+daily_word = daily_word['Word_Count'].unstack(level=0)
+
+non_spam_days = daily_word.loc['no']
+
+
+# days with largest non spam messages
+max_non_spam = non_spam_days.groupby(pd.TimeGrouper('M')).max()
+
+
+print('\nDays with largest non spam messages (check manually):')
+print(max_non_spam)
