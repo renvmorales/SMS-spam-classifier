@@ -11,8 +11,7 @@ The goal here is to evaluate the generalization capacity of the following classi
 ## Directions
 
 Run the exploratory data analysis:
-```python
-
+```bash
 	python3 EDA.py
 ```
 
