@@ -39,4 +39,4 @@ A word cloud, and a monthly counts bar plot whether messages is spam or not will
 
 The output will print out the error and estimates for f1-score, precision and recall metrics.
 
-Check ```artigo_SMS.pdf ``` for a more detailed description of the methods and a discussion of the model evaluation (in Portuguese). 
+Check [```artigo_SMS.pdf ```](https://github.com/renvmorales/SMS-spam-classifier/blob/master/artigo_SMS.pdf) for a more detailed description of the methods and a discussion of the model evaluation (in Portuguese). 
